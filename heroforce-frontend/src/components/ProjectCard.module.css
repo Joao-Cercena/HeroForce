@@ -1,0 +1,54 @@
+.projectCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.projectCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.progressBar {
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.pendente {
+  border-left: 4px solid #FFC107;
+}
+
+.emandamento {
+  border-left: 4px solid #2196F3;
+}
+
+.concluido {
+  border-left: 4px solid #4CAF50;
+}
+
+
+.editButton {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: none;
+  background-color: #2196f3;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+

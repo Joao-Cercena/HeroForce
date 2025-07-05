@@ -1,0 +1,50 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ProjectForm from "../components/ProjectForm";
+import axios from "axios";
+import { useToast } from "../context/ToastContext";
+
+const NewProject = () => {
+  const [heroes, setHeroes] = useState<{ id: string; name: string }[]>([]);
+  const { addToast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (!user?.isAdmin) {
+      addToast("Acesso restrito a administradores.", "error");
+      navigate("/dashboard");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchHeroes = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/users", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setHeroes(response.data);
+      } catch (error) {
+        addToast("Erro ao carregar heróis", "error");
+      }
+    };
+
+    fetchHeroes();
+  }, [addToast]);
+
+  return (
+    <ProjectForm
+      project={null}
+      heroes={heroes}
+      onClose={() => navigate("/dashboard")}
+      onSave={() => {
+        addToast("Projeto criado com sucesso!", "success");
+        navigate("/dashboard");
+      }}
+    />
+  );
+};
+
+export default NewProject;
