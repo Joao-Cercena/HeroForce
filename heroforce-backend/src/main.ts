@@ -1,18 +1,37 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { UsersService } from './users/users.service';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-    const usersService = app.get(UsersService);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  const config = new DocumentBuilder()
+    .setTitle('HeroForce API')
+    .setDescription('Documentação da API da HeroForce')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  const usersService = app.get(UsersService);
   await seedAdminUser(usersService);
   await app.listen(process.env.PORT ?? 3001);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
-
 
 async function seedAdminUser(usersService: UsersService) {
   const email = 'stan.lee@heroforce.com';
@@ -24,7 +43,8 @@ async function seedAdminUser(usersService: UsersService) {
       email,
       password: 'Excelsior#1962',
       heroName: 'The Watcher',
-      heroImage: 'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/709-watcher.jpg',
+      heroImage:
+        'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/709-watcher.jpg',
       isAdmin: true,
     } as any);
     console.log('👤 Usuário admin "Stan Lee" criado!');

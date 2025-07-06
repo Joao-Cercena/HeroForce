@@ -18,9 +18,11 @@ import { Request } from 'express';
 import { AdminGuard } from '../auth/admin.guard';
 import { Project } from './project.entity';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
@@ -41,6 +43,7 @@ export class ProjectsController {
   @Post()
   @UseGuards(AdminGuard)
   create(@Body() createProjectDto: CreateProjectDto, @Req() req) {
+  
     return this.projectsService.create(createProjectDto, req.body.hero);
   }
 

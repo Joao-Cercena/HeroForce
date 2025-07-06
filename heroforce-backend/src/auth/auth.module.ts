@@ -5,20 +5,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/user.entity';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { LocalStrategy } from './local.strategy'; 
+import { LocalStrategy } from './local.strategy';
 import { AuthController } from './auth.controller';
 import { UsersService } from '../users/users.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     PassportModule,
-    JwtModule.register({
-      secret: 'meu-super-poder', 
-      signOptions: { expiresIn: '1d' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRATION') },
+      }),
+      inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([User]),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, UsersService], 
+  providers: [AuthService, LocalStrategy, JwtStrategy, UsersService],
   controllers: [AuthController],
   exports: [JwtStrategy, PassportModule],
 })

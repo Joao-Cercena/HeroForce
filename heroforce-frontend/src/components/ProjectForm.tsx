@@ -29,6 +29,15 @@ type ProjectFormProps = {
   onSave: (project: any) => void;
 };
 
+const metricLabels: Record<string, string> = {
+  agilidade: "Agilidade",
+  encantamento: "Encantamento",
+  eficiência: "Eficiência",
+  excelência: "Excelência",
+  transparência: "Transparência",
+  ambição: "Ambição",
+};
+
 const ProjectForm = ({
   project,
   heroes,
@@ -69,7 +78,29 @@ const ProjectForm = ({
 
       const method = project?.id ? "put" : "post";
 
-      const response = await axios[method](url, formData, {
+      const metricsMap = {
+        agilidade: "agility",
+        encantamento: "enchantment",
+        eficiência: "efficiency",
+        excelência: "excellence",
+        transparência: "transparency",
+        ambição: "ambition",
+      };
+
+      const convertedMetrics: Record<string, number> = {};
+      for (const [ptKey, value] of Object.entries(formData.metrics)) {
+        const enKey = metricsMap[ptKey as keyof typeof metricsMap];
+        if (enKey) {
+          convertedMetrics[enKey] = value;
+        }
+      }
+
+      const payload = {
+        ...formData,
+        metrics: convertedMetrics,
+      };
+
+      const response = await axios[method](url, payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -175,9 +206,7 @@ const ProjectForm = ({
             <h3>Métricas Heroicas</h3>
             {Object.entries(formData.metrics).map(([metric, value]) => (
               <div key={metric} className={styles.metricControl}>
-                <label>
-                  {metric.charAt(0).toUpperCase() + metric.slice(1)}
-                </label>
+                <label>{metricLabels[metric]}</label>
                 <input
                   type="range"
                   min="0"

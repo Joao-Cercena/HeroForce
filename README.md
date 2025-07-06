@@ -76,6 +76,24 @@ npm run start
 
 ---
 
+## 📄 Arquivo .env
+Antes de rodar a aplicação, crie um arquivo `.env` na raiz do diretório `heroforce-backend` com as seguintes variáveis:
+
+```env
+JWT_SECRET=seu-super-poder
+JWT_EXPIRATION=1d
+```
+Essas variáveis são usadas para a autenticação JWT no backend.
+
+---
+
+## 📚 Documentação da API
+Acesse a documentação Swagger da API em:
+
+[Acesse aqui](http://localhost:3001/api)
+
+Use-a para testar os endpoints, visualizar schemas e adicionar seu token de autenticação (Authorize).
+
 ## 🧪 Rodando os Testes
 
 ### Backend
