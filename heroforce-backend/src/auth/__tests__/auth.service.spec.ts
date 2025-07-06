@@ -16,7 +16,8 @@ describe('AuthService', () => {
         email: 'test@example.com',
         password: bcrypt.hashSync('123456', 10),
         isAdmin: false,
-        heroCharacter: 'Spider-Man',
+        heroName: 'Spider-Man',
+        heroImage: 'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/620-spider-man.jpg',
       }),
     };
 

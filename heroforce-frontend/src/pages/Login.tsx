@@ -28,7 +28,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem(
         "heroAvatar",
-        `https://robohash.org/${user.heroCharacter}?set=set2`
+        user.heroImage
       );
 
       addToast(`Bem-vindo, ${user.name}!`, "success");

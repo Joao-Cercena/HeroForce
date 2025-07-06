@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
@@ -7,6 +7,7 @@ const Header = () => {
   const heroAvatar = localStorage.getItem('heroAvatar') || 'default-avatar.png';
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [showPopover, setShowPopover] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -14,6 +15,28 @@ const Header = () => {
     localStorage.removeItem('heroAvatar');
     navigate('/login');
   };
+
+  // Fecha o popover se clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node)
+      ) {
+        setShowPopover(false);
+      }
+    };
+
+    if (showPopover) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopover]);
 
   return (
     <header className="header">
@@ -30,10 +53,11 @@ const Header = () => {
         />
 
         {showPopover && (
-          <div className="popover">
+          <div className="popover" ref={popoverRef}>
+            <img src={heroAvatar} alt="Hero Avatar" className="popover-avatar" />
+            <p>{user.heroName}</p>
             <p><strong>{user.name}</strong></p>
             <p>{user.email}</p>
-            <p>{user.heroCharacter}</p>
           </div>
         )}
 

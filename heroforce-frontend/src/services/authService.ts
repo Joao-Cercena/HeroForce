@@ -29,7 +29,8 @@ export const register = async (
     name: string;
     email: string;
     password: string;
-    heroCharacter: string;
+    heroName: string;
+    heroImage: string;
   },
   addToast: ToastFunction
 ) => {

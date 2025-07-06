@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
 import { useToast } from "../context/ToastContext";
 import styles from "./Register.module.css";
-
+import heroList from "../utils/heroes.json";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [heroCharacter, setHeroCharacter] = useState("Spider-Man");
+  const [heroCharacter, setHeroCharacter] = useState({
+    name: heroList[0].name,
+    profileImage: heroList[0].profileImage,
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { addToast } = useToast();
@@ -25,7 +28,16 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await register({ name, email, password, heroCharacter }, addToast);
+      await register(
+        {
+          name,
+          email,
+          password,
+          heroName: heroCharacter.name,
+          heroImage: heroCharacter.profileImage,
+        },
+        addToast
+      );
       addToast("Registro realizado com sucesso! Faça login.", "success");
       navigate("/login");
     } catch (error) {
@@ -76,12 +88,22 @@ const Register = () => {
         <div className={styles.formGroup}>
           <label>Herói</label>
           <select
-            value={heroCharacter}
-            onChange={(e) => setHeroCharacter(e.target.value)}
+            value={heroCharacter.name}
+            onChange={(e) => {
+              const selected = heroList.find((h) => h.name === e.target.value);
+              if (selected) {
+                setHeroCharacter({
+                  name: selected.name,
+                  profileImage: selected.profileImage,
+                });
+              }
+            }}
           >
-            <option value="Spider-Man">Homem-Aranha</option>
-            <option value="Batman">Batman</option>
-            <option value="Wonder Woman">Mulher-Maravilha</option>
+            {heroList.map((hero) => (
+              <option key={hero.id} value={hero.name}>
+                {hero.name}
+              </option>
+            ))}
           </select>
         </div>
 

@@ -36,7 +36,8 @@ describe('UsersService', () => {
         name: 'Test User',
         email: 'test@example.com',
         password: '123456',
-        heroCharacter: 'Spider-Man',
+        heroName: 'Spider-Man',
+        heroImage: 'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/620-spider-man.jpg',
       };
 
       const mockUser = {
@@ -69,7 +70,8 @@ describe('UsersService', () => {
         name: 'Test User',
         email: 'test@example.com',
         password: 'hashedPassword',
-        heroCharacter: 'Spider-Man',
+        heroName: 'Spider-Man',
+        heroImage: 'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/620-spider-man.jpg',
         isAdmin: false,
       };
 

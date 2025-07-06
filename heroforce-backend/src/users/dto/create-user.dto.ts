@@ -11,5 +11,8 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  heroCharacter: string;
+  heroImage: string;
+
+  @IsNotEmpty()
+  heroName: string;
 }

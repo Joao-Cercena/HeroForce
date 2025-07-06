@@ -16,7 +16,10 @@ export class User {
   name: string;
 
   @Column()
-  heroCharacter: string;
+  heroName: string;
+
+  @Column()
+  heroImage: string;
 
   @Column({ default: false })
   isAdmin: boolean;

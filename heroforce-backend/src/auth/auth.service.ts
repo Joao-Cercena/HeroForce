@@ -30,7 +30,8 @@ export class AuthService {
         id: user.id,
         name: user.name,
         email: user.email,
-        heroCharacter: user.heroCharacter,
+        heroName: user.heroName,
+        heroImage: user.heroImage,
         isAdmin: user.isAdmin,
       },
     };
