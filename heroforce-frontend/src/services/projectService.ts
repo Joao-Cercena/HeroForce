@@ -16,3 +16,12 @@ export const getProjects = async (filters = {}) => {
 
   return response.data;
 };
+
+export const deleteProject = async (id: string) => {
+  const res = await axios.delete(`http://localhost:3001/projects/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  return res.data;
+};

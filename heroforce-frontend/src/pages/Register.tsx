@@ -4,6 +4,7 @@ import { register } from "../services/authService";
 import { useToast } from "../context/ToastContext";
 import styles from "./Register.module.css";
 
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await register({ name, email, password, heroCharacter });
+      await register({ name, email, password, heroCharacter }, addToast);
       addToast("Registro realizado com sucesso! Faça login.", "success");
       navigate("/login");
     } catch (error) {

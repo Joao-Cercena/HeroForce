@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   UseGuards,
   Param,
@@ -50,5 +51,11 @@ export class ProjectsController {
     @Body() updateProjectDto: UpdateProjectDto,
   ): Promise<Project> {
     return this.projectsService.update(id, updateProjectDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(AdminGuard)
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.projectsService.remove(id);
   }
 }

@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { access_token, user } = await login(email, password);
+      const { access_token, user } = await login(email, password, addToast);
 
       localStorage.setItem("token", access_token);
       localStorage.setItem("user", JSON.stringify(user));
@@ -35,7 +35,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       addToast(
-        error instanceof Error ? error.message : "Credenciais inválidas",
+        "Erro ao fazer login",
         "error"
       );
     } finally {

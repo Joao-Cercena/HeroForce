@@ -14,28 +14,28 @@ export class ProjectsService {
   ) {}
 
   async findAll(
-  status?: string,
-  heroId?: string,
-  user?: any
-): Promise<Project[]> {
-  const query = this.projectsRepository.createQueryBuilder('project')
-    .leftJoinAndSelect('project.hero', 'hero');
+    status?: string,
+    heroId?: string,
+    user?: any,
+  ): Promise<Project[]> {
+    const query = this.projectsRepository
+      .createQueryBuilder('project')
+      .leftJoinAndSelect('project.hero', 'hero');
 
-  if (!user.isAdmin) {
-    query.andWhere('hero.id = :userId', { userId: user.id });
+    if (!user.isAdmin) {
+      query.andWhere('hero.id = :userId', { userId: user.id });
+    }
+
+    if (status) {
+      query.andWhere('project.status = :status', { status });
+    }
+
+    if (heroId && user.isAdmin) {
+      query.andWhere('hero.id = :heroId', { heroId });
+    }
+
+    return await query.getMany();
   }
-
-  if (status) {
-    query.andWhere('project.status = :status', { status });
-  }
-
-  if (heroId && user.isAdmin) {
-    query.andWhere('hero.id = :heroId', { heroId });
-  }
-
-  return await query.getMany();
-}
-
 
   async findOne(id: string): Promise<Project> {
     const project = await this.projectsRepository.findOne({
@@ -74,5 +74,15 @@ export class ProjectsService {
     Object.assign(project, updateProjectDto);
 
     return this.projectsRepository.save(project);
+  }
+
+  async remove(id: string): Promise<void> {
+    const project = await this.projectsRepository.findOne({ where: { id } });
+
+    if (!project) {
+      throw new NotFoundException('Projeto não encontrado');
+    }
+
+    await this.projectsRepository.remove(project);
   }
 }

@@ -26,6 +26,7 @@ describe('ProjectsService', () => {
             findOne: jest.fn(),
             create: jest.fn(),
             save: jest.fn(),
+            remove: jest.fn(),
           },
         },
         {
@@ -36,7 +37,9 @@ describe('ProjectsService', () => {
     }).compile();
 
     service = module.get<ProjectsService>(ProjectsService);
-    projectRepository = module.get<Repository<Project>>(getRepositoryToken(Project));
+    projectRepository = module.get<Repository<Project>>(
+      getRepositoryToken(Project),
+    );
   });
 
   describe('findAll', () => {
@@ -48,43 +51,58 @@ describe('ProjectsService', () => {
         getMany: jest.fn().mockResolvedValue(mockProjects),
       } as any);
 
-      const result = await service.findAll(undefined, undefined, { isAdmin: true });
+      const result = await service.findAll(undefined, undefined, {
+        isAdmin: true,
+      });
       expect(result).toEqual(mockProjects);
     });
 
     it('deve filtrar por status', async () => {
-      const mockProjects = [{ id: '1', name: 'Project 1', status: 'emandamento' }];
+      const mockProjects = [
+        { id: '1', name: 'Project 1', status: 'emandamento' },
+      ];
       jest.spyOn(projectRepository, 'createQueryBuilder').mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         andWhere: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockResolvedValue(mockProjects),
       } as any);
 
-      const result = await service.findAll('emandamento', undefined, { isAdmin: true });
+      const result = await service.findAll('emandamento', undefined, {
+        isAdmin: true,
+      });
       expect(result).toEqual(mockProjects);
     });
 
     it('deve filtrar por heroId apenas para admin', async () => {
-      const mockProjects = [{ id: '1', name: 'Project 1', hero: { id: 'hero-1' } }];
+      const mockProjects = [
+        { id: '1', name: 'Project 1', hero: { id: 'hero-1' } },
+      ];
       jest.spyOn(projectRepository, 'createQueryBuilder').mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         andWhere: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockResolvedValue(mockProjects),
       } as any);
 
-      const result = await service.findAll(undefined, 'hero-1', { isAdmin: true });
+      const result = await service.findAll(undefined, 'hero-1', {
+        isAdmin: true,
+      });
       expect(result).toEqual(mockProjects);
     });
 
     it('deve retornar apenas projetos do usuário quando não for admin', async () => {
-      const mockProjects = [{ id: '1', name: 'Project 1', hero: { id: 'user-1' } }];
+      const mockProjects = [
+        { id: '1', name: 'Project 1', hero: { id: 'user-1' } },
+      ];
       jest.spyOn(projectRepository, 'createQueryBuilder').mockReturnValue({
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         andWhere: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockResolvedValue(mockProjects),
       } as any);
 
-      const result = await service.findAll(undefined, undefined, { isAdmin: false, id: 'user-1' });
+      const result = await service.findAll(undefined, undefined, {
+        isAdmin: false,
+        id: 'user-1',
+      });
       expect(result).toEqual(mockProjects);
     });
   });
@@ -92,7 +110,9 @@ describe('ProjectsService', () => {
   describe('findOne', () => {
     it('deve retornar um projeto existente', async () => {
       const mockProject = { id: '1', name: 'Project 1' };
-      jest.spyOn(projectRepository, 'findOne').mockResolvedValue(mockProject as Project);
+      jest
+        .spyOn(projectRepository, 'findOne')
+        .mockResolvedValue(mockProject as Project);
 
       const result = await service.findOne('1');
       expect(result).toEqual(mockProject);
@@ -127,8 +147,12 @@ describe('ProjectsService', () => {
         hero: { id: 'hero-1' },
       };
 
-      jest.spyOn(projectRepository, 'create').mockReturnValue(mockProject as Project);
-      jest.spyOn(projectRepository, 'save').mockResolvedValue(mockProject as Project);
+      jest
+        .spyOn(projectRepository, 'create')
+        .mockReturnValue(mockProject as Project);
+      jest
+        .spyOn(projectRepository, 'save')
+        .mockResolvedValue(mockProject as Project);
 
       const result = await service.create(createProjectDto, 'hero-1');
       expect(result).toEqual(mockProject);
@@ -146,7 +170,14 @@ describe('ProjectsService', () => {
         name: 'Old Name',
         description: 'Old Description',
         progress: 0,
-        metrics: { agility: 0, enchantment: 0, efficiency: 0, excellence: 0, transparency: 0, ambition: 0 },
+        metrics: {
+          agility: 0,
+          enchantment: 0,
+          efficiency: 0,
+          excellence: 0,
+          transparency: 0,
+          ambition: 0,
+        },
       };
 
       const updateData = {
@@ -159,8 +190,12 @@ describe('ProjectsService', () => {
         ...updateData,
       };
 
-      jest.spyOn(projectRepository, 'findOne').mockResolvedValue(existingProject as Project);
-      jest.spyOn(projectRepository, 'save').mockResolvedValue(updatedProject as Project);
+      jest
+        .spyOn(projectRepository, 'findOne')
+        .mockResolvedValue(existingProject as Project);
+      jest
+        .spyOn(projectRepository, 'save')
+        .mockResolvedValue(updatedProject as Project);
 
       const result = await service.update('1', updateData);
       expect(result).toEqual(updatedProject);
@@ -169,7 +204,32 @@ describe('ProjectsService', () => {
     it('deve lançar NotFoundException ao tentar atualizar projeto inexistente', async () => {
       jest.spyOn(projectRepository, 'findOne').mockResolvedValue(null);
 
-      await expect(service.update('999', { name: 'Updated' })).rejects.toThrow(NotFoundException);
+      await expect(service.update('999', { name: 'Updated' })).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  describe('remove', () => {
+    it('deve remover um projeto existente', async () => {
+      const mockProject = { id: '1', name: 'Project 1' };
+
+      jest
+        .spyOn(projectRepository, 'findOne')
+        .mockResolvedValue(mockProject as Project);
+
+      const removeSpy = jest
+        .spyOn(projectRepository, 'remove')
+        .mockResolvedValue(undefined as any); 
+
+      await expect(service.remove('1')).resolves.toBeUndefined();
+      expect(removeSpy).toHaveBeenCalledWith(mockProject);
+    });
+
+    it('deve lançar NotFoundException se o projeto não existir', async () => {
+      jest.spyOn(projectRepository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.remove('999')).rejects.toThrow(NotFoundException);
     });
   });
 });

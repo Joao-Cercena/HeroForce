@@ -1,9 +1,14 @@
 import axios from "axios";
-import { useToast } from "../context/ToastContext";
 
 const API_URL = "http://localhost:3001/auth";
 
-export const login = async (email: string, password: string) => {
+type ToastFunction = (message: string, type: 'success' | 'error' | 'info') => void;
+
+export const login = async (
+  email: string,
+  password: string,
+   addToast: ToastFunction
+) => {
   try {
     const response = await axios.post(`${API_URL}/login`, {
       email,
@@ -12,29 +17,34 @@ export const login = async (email: string, password: string) => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Erro ao fazer login");
+      addToast(error.response?.data?.message || "Erro ao fazer login", "error");
+    } else {
+      addToast("Erro desconhecido ao fazer login", "error");
     }
-    throw new Error("Erro desconhecido ao fazer login");
   }
 };
 
-export const register = async (userData: {
-  name: string;
-  email: string;
-  password: string;
-  heroCharacter: string;
-}) => {
+export const register = async (
+  userData: {
+    name: string;
+    email: string;
+    password: string;
+    heroCharacter: string;
+  },
+  addToast: ToastFunction
+) => {
   try {
     const response = await axios.post(`${API_URL}/register`, userData);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-
-      throw new Error(error.response?.data?.message || "Erro ao registrar");
+      addToast(error.response?.data?.message || "Erro ao registrar", "error");
+    } else {
+      addToast("Erro desconhecido ao registrar", "error");
     }
-    throw new Error("Erro desconhecido ao registrar");
   }
 };
+
 
 export const getCurrentUser = async () => {
   try {
@@ -57,7 +67,7 @@ export const getCurrentUser = async () => {
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
-    
+
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     return null;

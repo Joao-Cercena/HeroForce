@@ -70,22 +70,23 @@ describe('CreateProjectDto', () => {
     }
   });
 
-  it('deve falhar sem métricas completas', async () => {
+  it('deve falhar com métricas incompletas', async () => {
     const dto = plainToInstance(CreateProjectDto, {
       name: 'Projeto',
       description: 'Descrição',
       progress: 50,
       metrics: {
         agility: 10,
-        enchantment: 10,
+        // enchantment está faltando
         efficiency: 10,
         excellence: 10,
         transparency: 10,
         ambition: 10,
-      }, 
+      },
     });
 
     const errors = await validate(dto);
     expect(errors.length).toBeGreaterThan(0);
+    expect(errors[0].property).toBe('metrics');
   });
 });

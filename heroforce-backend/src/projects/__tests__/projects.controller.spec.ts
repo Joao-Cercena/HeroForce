@@ -3,7 +3,7 @@ import { ProjectsController } from '../projects.controller';
 import { ProjectsService } from '../projects.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { AdminGuard } from '../../auth/admin.guard';
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, NotFoundException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { Project } from '../project.entity';
@@ -41,6 +41,7 @@ describe('ProjectsController', () => {
             findOne: jest.fn(),
             create: jest.fn(),
             update: jest.fn(),
+            remove: jest.fn(),
           },
         },
         {
@@ -185,6 +186,26 @@ describe('ProjectsController', () => {
 
       const result = await controller.update('1', updateProjectDto);
       expect(result).toEqual(mockProject);
+    });
+  });
+
+  describe('remove', () => {
+    it('deve remover um projeto', async () => {
+      const removeSpy = jest
+        .spyOn(projectsService, 'remove')
+        .mockResolvedValue(undefined);
+
+      const result = await controller.remove('1');
+      expect(result).toBeUndefined();
+      expect(removeSpy).toHaveBeenCalledWith('1');
+    });
+
+    it('deve lançar exceção se o service lançar', async () => {
+      jest
+        .spyOn(projectsService, 'remove')
+        .mockRejectedValue(new NotFoundException('Projeto não encontrado'));
+
+      await expect(controller.remove('999')).rejects.toThrow(NotFoundException);
     });
   });
 });
