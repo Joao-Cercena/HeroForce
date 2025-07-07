@@ -5,7 +5,7 @@
   "scripts": {
   "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
   "start:frontend": "cd heroforce-frontend && npm start",
-  "start:backend": "cd heroforce-backend && npm run start:dev"
+  "start:backend": "cd heroforce-backend && npm run start"
 }
 ,
   "keywords": [],

@@ -58,8 +58,12 @@ Certifique-se de que o seu banco, no caso do exemplo `heroforce`, exista antes d
 Antes de rodar a aplicação, crie um arquivo `.env` na raiz do diretório `heroforce-backend` com as seguintes variáveis:
 
 ```env
+# JWT
 JWT_SECRET=seu-super-poder
 JWT_EXPIRATION=1d
+
+# Banco de Dados
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/heroforce
 ```
 
 Essas variáveis são usadas para a autenticação JWT no backend.
