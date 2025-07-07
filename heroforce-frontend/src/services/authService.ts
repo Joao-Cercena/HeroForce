@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/auth";
+const API_URL = `${process.env.REACT_APP_API_URL}/auth`;
 
 type ToastFunction = (message: string, type: 'success' | 'error' | 'info') => void;
 

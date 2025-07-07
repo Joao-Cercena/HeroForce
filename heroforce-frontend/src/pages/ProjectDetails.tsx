@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useToast } from "../context/ToastContext";
 import styles from "./ProjectDetails.module.css";
+import { getProjectById } from "../services/projectService";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -14,17 +14,14 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/projects/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setProject(response.data);
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 404) {
+        if (!id || id === "new") {
+          setLoading(false);
+          return;
+        }
+        const data = await getProjectById(id);
+        setProject(data);
+      } catch (error: any) {
+        if (error.response?.status === 404) {
           addToast("Projeto não encontrado", "error");
           navigate("/dashboard");
         } else {
@@ -36,18 +33,12 @@ const ProjectDetails = () => {
       }
     };
 
-    if (id && id !== "new") {
-      fetchProject();
-    } else {
-      setLoading(false); 
-    }
+    fetchProject();
   }, [id, navigate, addToast]);
 
   if (loading) return <div>Carregando...</div>;
   if (!project) return <div>Projeto não encontrado</div>;
-  if (id === "new") {
-    return <div>Redirecionando...</div>; 
-  }
+  if (id === "new") return <div>Redirecionando...</div>;
 
   return (
     <div className={styles.container}>
@@ -61,10 +52,8 @@ const ProjectDetails = () => {
       <h1>{project.name}</h1>
       <p className={styles.description}>{project.description}</p>
 
-      <div className={styles.description}>
-      
-        <p className={styles.description}>Responsável: {project.hero.name}</p>
-      </div>
+      <p className={styles.description}>Responsável: {project.hero.name}</p>
+
       <div className={styles.statusContainer}>
         <span>Status: </span>
         <span className={`${styles.status} ${styles[project.status]}`}>

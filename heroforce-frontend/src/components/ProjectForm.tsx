@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ProjectForm.module.css";
+import { saveProject } from "../services/projectService"; // ajuste o path se necessário
 
 type Hero = {
   id: string;
@@ -14,7 +15,7 @@ type ProjectFormProps = {
     description?: string;
     status?: "pendente" | "emandamento" | "concluido";
     progress?: number;
-    hero?: { id: string; };
+    hero?: { id: string };
     metrics?: {
       agility: number;
       enchantment: number;
@@ -71,13 +72,8 @@ const ProjectForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
-      const url = project?.id
-        ? `http://localhost:3001/projects/${project.id}`
-        : "http://localhost:3001/projects";
-
-      const method = project?.id ? "put" : "post";
-
       const metricsMap = {
         agilidade: "agility",
         encantamento: "enchantment",
@@ -100,15 +96,10 @@ const ProjectForm = ({
         metrics: convertedMetrics,
       };
 
-      const response = await axios[method](url, payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      onSave(response.data);
+      const savedProject = await saveProject(payload, project?.id);
+      onSave(savedProject);
     } catch (error) {
-      console.error("Error saving project:", error);
+      console.error("Erro ao salvar projeto:", error);
     }
   };
 

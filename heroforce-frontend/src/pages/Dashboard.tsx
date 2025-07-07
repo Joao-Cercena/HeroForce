@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getProjects } from "../services/projectService";
+import { getHeroes } from "../services/userService";
 import ProjectCard from "../components/ProjectCard";
 import styles from "./Dashboard.module.css";
 import Loading from "../components/Loading";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
-import axios from "axios";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -24,12 +24,8 @@ const Dashboard = () => {
       if (!isAdmin) return;
 
       try {
-        const res = await axios.get("http://localhost:3001/users", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setHeroes(res.data);
+        const heroesData = await getHeroes();
+        setHeroes(heroesData);
       } catch (error) {
         addToast("Erro ao carregar heróis", "error");
       }
@@ -104,7 +100,6 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-
 
       <div className={styles.projectsGrid}>
         {projects.map((project) => (

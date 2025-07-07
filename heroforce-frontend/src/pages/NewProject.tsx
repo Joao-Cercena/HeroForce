@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProjectForm from "../components/ProjectForm";
-import axios from "axios";
 import { useToast } from "../context/ToastContext";
+import { getHeroes } from "../services/userService";
 
 const NewProject = () => {
   const [heroes, setHeroes] = useState<{ id: string; name: string }[]>([]);
@@ -15,17 +15,13 @@ const NewProject = () => {
       addToast("Acesso restrito a administradores.", "error");
       navigate("/dashboard");
     }
-  }, []);
+  }, [addToast, navigate]);
 
   useEffect(() => {
     const fetchHeroes = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/users", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setHeroes(response.data);
+        const data = await getHeroes();
+        setHeroes(data);
       } catch (error) {
         addToast("Erro ao carregar heróis", "error");
       }

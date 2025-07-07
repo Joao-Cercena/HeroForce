@@ -68,6 +68,15 @@ DATABASE_URL=postgres://postgres:postgres@localhost:5432/heroforce
 
 Essas variáveis são usadas para a autenticação JWT no backend.
 
+Crie também um arquivo `.env` na raiz do diretório `heroforce-frontend` com a seguinte variável:
+
+```env
+# API
+REACT_APP_API_URL=http://localhost:3001
+```
+
+Essa variável é usada para fazer a conexão com o backend.
+
 ---
 
 ## ▶️ Executando a Aplicação
