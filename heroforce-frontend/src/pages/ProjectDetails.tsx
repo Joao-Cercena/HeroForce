@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import styles from "./ProjectDetails.module.css";
 import { getProjectById } from "../services/projectService";
+import Loading from "../components/Loading";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -36,7 +37,7 @@ const ProjectDetails = () => {
     fetchProject();
   }, [id, navigate, addToast]);
 
-  if (loading) return <div>Carregando...</div>;
+  if (loading) return <Loading />;
   if (!project) return <div>Projeto não encontrado</div>;
   if (id === "new") return <div>Redirecionando...</div>;
 

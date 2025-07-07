@@ -4,6 +4,7 @@ import ProjectForm from "../components/ProjectForm";
 import { useToast } from "../context/ToastContext";
 import { getProjectById } from "../services/projectService";
 import { getHeroes } from "../services/userService";
+import Loading from "../components/Loading";
 
 const EditProject = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const EditProject = () => {
     fetchData();
   }, [id, navigate, addToast]);
 
-  if (!project) return <p>Carregando...</p>;
+  if (!project) return <Loading />;
 
   return (
     <ProjectForm

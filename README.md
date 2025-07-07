@@ -4,6 +4,13 @@ HeroForce é uma aplicação Fullstack construída com **React**, **NestJS**, **
 
 ---
 
+## 🔗 Deploy
+
+- 🌐 **Frontend**: [https://heroforce.onrender.com](https://heroforce.onrender.com)
+- 🛠️ **Backend**: [https://heroforce-api.onrender.com](https://heroforce-api.onrender.com)
+
+---
+
 ## 🚀 Tecnologias Utilizadas
 
 ### Frontend
@@ -106,9 +113,9 @@ npm run start
 
 Acesse a documentação Swagger da API em:
 
-[Acesse aqui](http://localhost:3001/api)
+[Acesse aqui](https://heroforce-api.onrender.com/api)
 
-Use-a para testar os endpoints, visualizar schemas e adicionar seu token de autenticação (Authorize).
+Use para testar os endpoints, visualizar schemas e adicionar seu token de autenticação (Authorize).
 
 ## 🧪 Rodando os Testes
 

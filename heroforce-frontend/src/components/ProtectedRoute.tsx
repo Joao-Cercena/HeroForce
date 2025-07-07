@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useToast } from '../context/ToastContext';
-import { getCurrentUser } from '../services/authService';
+import React, { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
+import { getCurrentUser } from "../services/authService";
+import Loading from "./Loading";
 
 const ProtectedRoute = ({ adminOnly = false }) => {
   const [user, setUser] = useState<any>(null);
@@ -14,7 +15,7 @@ const ProtectedRoute = ({ adminOnly = false }) => {
         const currentUser = await getCurrentUser();
         setUser(currentUser);
       } catch (error) {
-        addToast('Sessão expirada. Faça login novamente.', 'error');
+        addToast("Sessão expirada. Faça login novamente.", "error");
       } finally {
         setLoading(false);
       }
@@ -23,7 +24,7 @@ const ProtectedRoute = ({ adminOnly = false }) => {
   }, [addToast]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <Loading />;
   }
 
   if (!user) {
