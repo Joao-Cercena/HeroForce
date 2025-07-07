@@ -32,6 +32,13 @@ const ProjectCard = ({ project }: { project: any }) => {
     }
   };
 
+  const statusLabelMap: Record<string, string> = {
+  pendente: "Pendente",
+  emandamento: "Em Andamento",
+  concluido: "Concluído",
+};
+
+
   return (
     <>
       {showConfirm && (
@@ -54,7 +61,7 @@ const ProjectCard = ({ project }: { project: any }) => {
         </div>
 
         <h5>Responsável: {project.hero?.name}</h5>
-        <span>Status: {project.status}</span>
+        <span>Status: {statusLabelMap[status] || "Desconhecido"}</span>
 
         {isAdmin && (
           <>

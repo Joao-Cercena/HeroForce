@@ -92,37 +92,37 @@ const ProjectDetails = () => {
           <div className={styles.metricItem}>
             <span>Agilidade</span>
             <div className={styles.metricValue}>
-              {project.metrics.agilidade}/10
+              {project.metrics.agility}/10
             </div>
           </div>
           <div className={styles.metricItem}>
             <span>Encantamento</span>
             <div className={styles.metricValue}>
-              {project.metrics.encantamento}/10
+              {project.metrics.enchantment}/10
             </div>
           </div>
           <div className={styles.metricItem}>
             <span>Eficiência</span>
             <div className={styles.metricValue}>
-              {project.metrics.eficiência}/10
+              {project.metrics.efficiency}/10
             </div>
           </div>
           <div className={styles.metricItem}>
             <span>Excelência</span>
             <div className={styles.metricValue}>
-              {project.metrics.excelência}/10
+              {project.metrics.excellence}/10
             </div>
           </div>
           <div className={styles.metricItem}>
             <span>Transparência</span>
             <div className={styles.metricValue}>
-              {project.metrics.transparência}/10
+              {project.metrics.transparency}/10
             </div>
           </div>
           <div className={styles.metricItem}>
             <span>Ambição</span>
             <div className={styles.metricValue}>
-              {project.metrics.ambição}/10
+              {project.metrics.ambition}/10
             </div>
           </div>
         </div>

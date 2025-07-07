@@ -43,9 +43,9 @@ async function seedAdminUser(usersService: UsersService) {
       name: 'Stan Lee',
       email,
       password: 'Excelsior#1962',
-      heroName: 'The Watcher',
+      heroName: 'Spider-Man',
       heroImage:
-        'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/709-watcher.jpg',
+        'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/620-spider-man.jpg',
       isAdmin: true,
     } as any);
     console.log('👤 Usuário admin "Stan Lee" criado!');

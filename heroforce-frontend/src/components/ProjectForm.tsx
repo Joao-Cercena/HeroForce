@@ -14,7 +14,7 @@ type ProjectFormProps = {
     description?: string;
     status?: "pendente" | "emandamento" | "concluido";
     progress?: number;
-    hero?: string;
+    hero?: { id: string; };
     metrics?: {
       agility: number;
       enchantment: number;
@@ -49,14 +49,14 @@ const ProjectForm = ({
     description: project?.description || "",
     status: project?.status || "pendente",
     progress: project?.progress || 0,
-    hero: project?.hero || (heroes.length > 0 ? heroes[0].id : ""),
+    hero: project?.hero ? project.hero.id : "",
     metrics: {
-      agilidade: project?.metrics?.agility || 5,
-      encantamento: project?.metrics?.enchantment || 5,
-      eficiência: project?.metrics?.efficiency || 5,
-      excelência: project?.metrics?.excellence || 5,
-      transparência: project?.metrics?.transparency || 5,
-      ambição: project?.metrics?.ambition || 5,
+      agilidade: project?.metrics?.agility ?? 5,
+      encantamento: project?.metrics?.enchantment ?? 5,
+      eficiência: project?.metrics?.efficiency ?? 5,
+      excelência: project?.metrics?.excellence ?? 5,
+      transparência: project?.metrics?.transparency ?? 5,
+      ambição: project?.metrics?.ambition ?? 5,
     },
   });
 

@@ -89,7 +89,7 @@ const Dashboard = () => {
 
         {isAdmin && (
           <div>
-            <label>Herói:</label>
+            <label>Responsável:</label>
             <select
               value={heroFilter}
               onChange={(e) => setHeroFilter(e.target.value)}
