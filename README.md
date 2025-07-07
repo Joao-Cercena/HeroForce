@@ -1,6 +1,6 @@
 # 🦸 HeroForce
 
-HeroForce é uma aplicação Full Stack construída com **React**, **NestJS**, **TypeORM** e **PostgreSQL**, projetada para o **gerenciamento de heróis e seus projetos**.
+HeroForce é uma aplicação Fullstack construída com **React**, **NestJS**, **TypeORM** e **PostgreSQL**, projetada para o **gerenciamento de heróis e seus projetos**.
 
 ---
 
@@ -53,6 +53,19 @@ Certifique-se de que o seu banco, no caso do exemplo `heroforce`, exista antes d
 
 ---
 
+## 📄 Arquivo .env
+
+Antes de rodar a aplicação, crie um arquivo `.env` na raiz do diretório `heroforce-backend` com as seguintes variáveis:
+
+```env
+JWT_SECRET=seu-super-poder
+JWT_EXPIRATION=1d
+```
+
+Essas variáveis são usadas para a autenticação JWT no backend.
+
+---
+
 ## ▶️ Executando a Aplicação
 
 ### 1. Instale as dependências
@@ -76,18 +89,8 @@ npm run start
 
 ---
 
-## 📄 Arquivo .env
-Antes de rodar a aplicação, crie um arquivo `.env` na raiz do diretório `heroforce-backend` com as seguintes variáveis:
-
-```env
-JWT_SECRET=seu-super-poder
-JWT_EXPIRATION=1d
-```
-Essas variáveis são usadas para a autenticação JWT no backend.
-
----
-
 ## 📚 Documentação da API
+
 Acesse a documentação Swagger da API em:
 
 [Acesse aqui](http://localhost:3001/api)
@@ -107,20 +110,36 @@ npm run test
 
 Na primeira execução do backend um **usuário administrador** é criado automaticamente:
 
-- **Nome:** Stan Lee  
-- **Email:** `stan.lee@heroforce.com`  
+- **Nome:** Stan Lee
+- **Email:** `stan.lee@heroforce.com`
 - **Senha:** `Excelsior#1962`
+
+---
+
+## 🧠 Escolha do Personagem
+
+Eu escolhi o **Donatello**, das Tartarugas Ninja, para representar meu perfil como desenvolvedor.
+
+Donatello é o dev da equipe: criativo, calmo e focado em soluções técnicas. Ele combina bastante com o perfil de um desenvolvedor Fullstack, pois ele cria ferramentas e também utiliza nas batalhas. É ele quem resolve os problemas com lógica, desenvolvendo soluções sólidas e inteligentes.
+
+**E quem não gosta de uma pizza? 🍕**
+
+Meu usuário é criado na primeira execução do backend com os seguintes dados:
+
+- **Nome:** João Vitor Cercená
+- **Email:** `joao.cercena@heroforce.com`
+- **Senha:** `123456`
 
 ---
 
 ## 📌 Funcionalidades
 
-- ✅ Registro e login com autenticação JWT  
-- ✅ Cadastro e listagem de projetos com métricas  
-- ✅ Edição e filtro de projetos  
-- ✅ Controle de permissões: heróis e administradores  
-- ✅ Interface com feedback visual via toasts  
-- ✅ Testes automatizados com Jest (backend)  
+- ✅ Registro e login com autenticação JWT
+- ✅ Cadastro e listagem de projetos com métricas
+- ✅ Edição e filtro de projetos
+- ✅ Controle de permissões: heróis e administradores
+- ✅ Interface com feedback visual via toasts
+- ✅ Testes automatizados com Jest (backend)
 
 ---
 
@@ -129,4 +148,3 @@ Na primeira execução do backend um **usuário administrador** é criado automa
 Este projeto está licenciado sob os termos do MIT.
 
 ---
-

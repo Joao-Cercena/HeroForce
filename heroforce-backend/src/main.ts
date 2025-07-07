@@ -28,6 +28,7 @@ async function bootstrap() {
 
   const usersService = app.get(UsersService);
   await seedAdminUser(usersService);
+  await seedMyHero(usersService);
   await app.listen(process.env.PORT ?? 3001);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
@@ -48,5 +49,23 @@ async function seedAdminUser(usersService: UsersService) {
       isAdmin: true,
     } as any);
     console.log('👤 Usuário admin "Stan Lee" criado!');
+  }
+}
+
+async function seedMyHero(usersService: UsersService) {
+  const email = 'joao.cercena@heroforce.com';
+  const existing = await usersService.findOneByEmail(email);
+
+  if (!existing) {
+    await usersService.create({
+      name: 'João Vitor Cercená',
+      email,
+      password: '123456',
+      heroName: 'Donatello',
+      heroImage:
+        'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/images/sm/228-donatello.jpg',
+      isAdmin: false,
+    } as any);
+    console.log('👤 Personagem escolhido!');
   }
 }
