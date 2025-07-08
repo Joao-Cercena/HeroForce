@@ -51,11 +51,11 @@ describe("Register Page", () => {
     renderWithRouter(<Register />);
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: "João" } });
     fireEvent.change(screen.getByLabelText(/email/i), { target: { value: "a@a.com" } });
-    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha" } });
+    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha123" } });
     fireEvent.change(screen.getByLabelText(/herói/i), { target: { value: "Hero2" } });
     expect(screen.getByLabelText(/nome/i)).toHaveValue("João");
     expect(screen.getByLabelText(/email/i)).toHaveValue("a@a.com");
-    expect(screen.getByLabelText(/senha/i)).toHaveValue("senha");
+    expect(screen.getByLabelText(/senha/i)).toHaveValue("senha123");
     expect(screen.getByLabelText(/herói/i)).toHaveValue("Hero2");
   });
 
@@ -64,7 +64,7 @@ describe("Register Page", () => {
     renderWithRouter(<Register />);
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: "João" } });
     fireEvent.change(screen.getByLabelText(/email/i), { target: { value: "a@a.com" } });
-    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha" } });
+    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha123" } });
     fireEvent.change(screen.getByLabelText(/herói/i), { target: { value: "Hero2" } });
     fireEvent.click(screen.getByRole("button", { name: /cadastrar/i }));
     await waitFor(() => {
@@ -72,7 +72,7 @@ describe("Register Page", () => {
         {
           name: "João",
           email: "a@a.com",
-          password: "senha",
+          password: "senha123",
           heroName: "Hero2",
           heroImage: "img2.png",
         },
@@ -91,7 +91,7 @@ describe("Register Page", () => {
     renderWithRouter(<Register />);
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: "João" } });
     fireEvent.change(screen.getByLabelText(/email/i), { target: { value: "a@a.com" } });
-    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha" } });
+    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha123" } });
     fireEvent.click(screen.getByRole("button", { name: /cadastrar/i }));
     await waitFor(() => {
       expect(mockAddToast).toHaveBeenCalledWith("Falha", "error");
@@ -106,7 +106,7 @@ describe("Register Page", () => {
     renderWithRouter(<Register />);
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: "João" } });
     fireEvent.change(screen.getByLabelText(/email/i), { target: { value: "a@a.com" } });
-    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha" } });
+    fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: "senha123" } });
     fireEvent.click(screen.getByRole("button", { name: /cadastrar/i }));
     expect(screen.getByRole("button", { name: /cadastrando/i })).toBeDisabled();
     resolveRegister({});

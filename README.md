@@ -130,7 +130,7 @@ npm run test
 
 ```bash
 cd heroforce-frontend
-npm run test
+npm test
 ```
 ---
 
