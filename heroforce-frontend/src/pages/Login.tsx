@@ -48,8 +48,9 @@ const Login = () => {
       <h1>HeroForce - Login</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             ref={emailRef}
             type="email"
             value={email}
@@ -59,8 +60,9 @@ const Login = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label>Senha</label>
+          <label htmlFor="password">Senha</label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

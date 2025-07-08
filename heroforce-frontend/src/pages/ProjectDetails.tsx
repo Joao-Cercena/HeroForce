@@ -38,8 +38,8 @@ const ProjectDetails = () => {
   }, [id, navigate, addToast]);
 
   if (loading) return <Loading />;
-  if (!project) return <div>Projeto não encontrado</div>;
   if (id === "new") return <div>Redirecionando...</div>;
+  if (!project) return <div>Projeto não encontrado</div>;
 
   return (
     <div className={styles.container}>

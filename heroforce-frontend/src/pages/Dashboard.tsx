@@ -71,8 +71,9 @@ const Dashboard = () => {
 
       <div className={styles.filters}>
         <div>
-          <label>Status:</label>
+          <label htmlFor="status">Status:</label>
           <select
+            id="status"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
@@ -85,8 +86,9 @@ const Dashboard = () => {
 
         {isAdmin && (
           <div>
-            <label>Responsável:</label>
+            <label htmlFor="responsavel">Responsável:</label>
             <select
+              id="responsavel"
               value={heroFilter}
               onChange={(e) => setHeroFilter(e.target.value)}
             >

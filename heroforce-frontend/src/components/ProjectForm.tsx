@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ProjectForm.module.css";
-import { saveProject } from "../services/projectService"; // ajuste o path se necessário
+import { saveProject } from "../services/projectService";
 
 type Hero = {
   id: string;
@@ -119,8 +119,9 @@ const ProjectForm = ({
         <h2>{project?.id ? "Editar Projeto" : "Novo Projeto"}</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label>Nome do Projeto</label>
+            <label htmlFor="name">Nome do Projeto</label>
             <input
+              id="name"
               type="text"
               value={formData.name}
               onChange={(e) =>
@@ -131,8 +132,9 @@ const ProjectForm = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Descrição</label>
+            <label htmlFor="description">Descrição</label>
             <textarea
+              id="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
@@ -142,8 +144,9 @@ const ProjectForm = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Herói Responsável</label>
+            <label htmlFor="hero">Herói Responsável</label>
             <select
+              id="hero"
               value={formData.hero}
               onChange={(e) =>
                 setFormData({ ...formData, hero: e.target.value })
@@ -158,8 +161,9 @@ const ProjectForm = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Status</label>
+            <label htmlFor="status">Status</label>
             <select
+              id="status"
               value={formData.status}
               onChange={(e) =>
                 setFormData({
@@ -178,8 +182,9 @@ const ProjectForm = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Progresso (%)</label>
+            <label htmlFor="progress">Progresso (%)</label>
             <input
+              id="progress"
               type="number"
               min="0"
               max="100"
@@ -197,8 +202,9 @@ const ProjectForm = ({
             <h3>Métricas Heroicas</h3>
             {Object.entries(formData.metrics).map(([metric, value]) => (
               <div key={metric} className={styles.metricControl}>
-                <label>{metricLabels[metric]}</label>
+                <label htmlFor={metric}>{metricLabels[metric]}</label>
                 <input
+                  id={metric}
                   type="range"
                   min="0"
                   max="10"

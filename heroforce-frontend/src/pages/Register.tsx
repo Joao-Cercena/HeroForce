@@ -55,8 +55,9 @@ const Register = () => {
       <h1>Cadastre-se como Herói</h1>
       <form onSubmit={handleSubmit} className={styles.registerForm}>
         <div className={styles.formGroup}>
-          <label>Nome</label>
+          <label htmlFor="name">Nome</label>
           <input
+            id="name"
             ref={nameRef}
             type="text"
             value={name}
@@ -66,8 +67,9 @@ const Register = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -76,8 +78,9 @@ const Register = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label>Senha</label>
+          <label htmlFor="password">Senha</label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -86,8 +89,9 @@ const Register = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label>Herói</label>
+          <label htmlFor="hero">Herói</label>
           <select
+            id="hero"
             value={heroCharacter.name}
             onChange={(e) => {
               const selected = heroList.find((h) => h.name === e.target.value);
