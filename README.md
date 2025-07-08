@@ -126,6 +126,14 @@ cd heroforce-backend
 npm run test
 ```
 
+### Frontend
+
+```bash
+cd heroforce-frontend
+npm run test
+```
+---
+
 ## 👤 Usuário Inicial
 
 Na primeira execução do backend um **usuário administrador** é criado automaticamente:
@@ -159,7 +167,7 @@ Meu usuário é criado na primeira execução do backend com os seguintes dados:
 - ✅ Edição e filtro de projetos
 - ✅ Controle de permissões: heróis e administradores
 - ✅ Interface com feedback visual via toasts
-- ✅ Testes automatizados com Jest (backend)
+- ✅ Testes automatizados com Jest (backend e frontend)
 
 ---
 
