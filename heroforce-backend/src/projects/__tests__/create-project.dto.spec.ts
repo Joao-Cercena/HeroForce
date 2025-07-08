@@ -4,89 +4,82 @@ import { validate } from 'class-validator';
 import { CreateProjectDto } from '../dto/create-project.dto';
 
 describe('CreateProjectDto', () => {
-  it('deve passar validação com dados corretos', async () => {
-    const dto = plainToInstance(CreateProjectDto, {
-      name: 'Projeto Teste',
-      description: 'Descrição do projeto',
-      progress: 50,
-      metrics: {
-        agility: 10,
-        enchantment: 20,
-        efficiency: 30,
-        excellence: 40,
-        transparency: 50,
-        ambition: 60,
-      },
-    });
+  const validDto = {
+    name: 'Projeto Teste',
+    description: 'Descrição do projeto',
+    progress: 50,
+    status: 'pendente',
+    hero: 'hero-1',
+    metrics: {
+      agility: 10,
+      enchantment: 20,
+      efficiency: 30,
+      excellence: 40,
+      transparency: 50,
+      ambition: 60,
+    },
+  };
 
+  it('deve passar validação com dados corretos', async () => {
+    const dto = plainToInstance(CreateProjectDto, validDto);
     const errors = await validate(dto);
     expect(errors.length).toBe(0);
   });
 
-  it('deve falhar sem nome', async () => {
-    const dto = plainToInstance(CreateProjectDto, {
-      description: 'Descrição',
-      progress: 50,
-      metrics: {
-        agility: 10,
-        enchantment: 20,
-        efficiency: 30,
-        excellence: 40,
-        transparency: 50,
-        ambition: 60,
-      },
-    });
-
+  it('deve falhar quando o nome estiver ausente', async () => {
+    const { name, ...partialDto } = validDto;
+    const dto = plainToInstance(CreateProjectDto, partialDto);
     const errors = await validate(dto);
-    expect(errors.length).toBe(1);
-    expect(errors[0].constraints).toHaveProperty('isNotEmpty');
+
+    expect(errors.some((e) => e.property === 'name')).toBe(true);
   });
 
-  it('deve falhar com progresso inválido', async () => {
-    const testCases = [
-      { progress: -1, expectedError: 'min' },
-      { progress: 101, expectedError: 'max' },
-      { progress: 'not a number', expectedError: 'isNumber' },
+  it('deve falhar com valores inválidos de progresso', async () => {
+    const invalidProgressCases = [
+      { progress: -5, expectedError: 'min' },
+      { progress: 150, expectedError: 'max' },
+      { progress: 'não é número', expectedError: 'isNumber' },
     ];
 
-    for (const testCase of testCases) {
+    for (const test of invalidProgressCases) {
       const dto = plainToInstance(CreateProjectDto, {
-        name: 'Projeto',
-        description: 'Descrição',
-        progress: testCase.progress,
-        metrics: {
-          agility: 10,
-          enchantment: 20,
-          efficiency: 30,
-          excellence: 40,
-          transparency: 50,
-          ambition: 60,
-        },
+        ...validDto,
+        progress: test.progress,
       });
 
       const errors = await validate(dto);
-      expect(errors.length).toBe(1);
-      expect(errors[0].constraints).toHaveProperty(testCase.expectedError);
+      const progressError = errors.find((e) => e.property === 'progress');
+
+      expect(progressError).toBeDefined();
+      expect(progressError?.constraints).toHaveProperty(test.expectedError);
     }
   });
 
-  it('deve falhar com métricas incompletas', async () => {
+  it('deve falhar quando alguma métrica estiver ausente', async () => {
+    const { metrics, ...rest } = validDto;
+    const { enchantment, ...partialMetrics } = metrics;
+
     const dto = plainToInstance(CreateProjectDto, {
-      name: 'Projeto',
-      description: 'Descrição',
-      progress: 50,
-      metrics: {
-        agility: 10,
-        // enchantment está faltando
-        efficiency: 10,
-        excellence: 10,
-        transparency: 10,
-        ambition: 10,
-      },
+      ...rest,
+      metrics: partialMetrics,
     });
 
     const errors = await validate(dto);
-    expect(errors.length).toBeGreaterThan(0);
-    expect(errors[0].property).toBe('metrics');
+    const metricsError = errors.find((e) => e.property === 'metrics');
+
+    expect(metricsError).toBeDefined();
+  });
+
+  it('deve falhar quando o status for inválido', async () => {
+    const dto = plainToInstance(CreateProjectDto, {
+      ...validDto,
+      status: 'invalido',
+    });
+
+    const errors = await validate(dto);
+    const statusError = errors.find((e) => e.property === 'status');
+
+    expect(statusError).toBeDefined();
+    expect(statusError?.constraints).toHaveProperty('isIn');
   });
 });

@@ -131,6 +131,8 @@ describe('ProjectsController', () => {
         name: 'New Project',
         description: 'Description',
         progress: 0,
+        status: 'pendente',
+        hero: 'hero-1',
         metrics: {
           agility: 10,
           enchantment: 20,

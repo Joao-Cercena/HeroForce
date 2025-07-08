@@ -131,6 +131,8 @@ describe('ProjectsService', () => {
         name: 'New Project',
         description: 'Description',
         progress: 0,
+        status: 'pendente',
+        hero: 'hero-1',
         metrics: {
           agility: 10,
           enchantment: 20,
@@ -220,7 +222,7 @@ describe('ProjectsService', () => {
 
       const removeSpy = jest
         .spyOn(projectRepository, 'remove')
-        .mockResolvedValue(undefined as any); 
+        .mockResolvedValue(undefined as any);
 
       await expect(service.remove('1')).resolves.toBeUndefined();
       expect(removeSpy).toHaveBeenCalledWith(mockProject);

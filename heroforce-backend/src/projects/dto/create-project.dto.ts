@@ -4,6 +4,7 @@ import {
   Min,
   Max,
   ValidateNested,
+  IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { MetricsDto } from './metrics.dto';
@@ -20,6 +21,7 @@ export class CreateProjectDto {
 
   @IsNotEmpty()
   @ApiProperty()
+  @IsIn(['pendente', 'emandamento', 'concluido'])
   status: string;
 
   @IsNumber()

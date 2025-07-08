@@ -69,7 +69,14 @@ describe('CreateUserDto', () => {
     });
 
     const errors = await validate(dto);
-    expect(errors.length).toBe(1);
-    expect(errors[0].constraints).toHaveProperty('isNotEmpty');
+
+    const heroNameError = errors.find((e) => e.property === 'heroName');
+    const heroImageError = errors.find((e) => e.property === 'heroImage');
+
+    expect(heroNameError).toBeDefined();
+    expect(heroNameError?.constraints).toHaveProperty('isNotEmpty');
+
+    expect(heroImageError).toBeDefined();
+    expect(heroImageError?.constraints).toHaveProperty('isNotEmpty');
   });
 });
