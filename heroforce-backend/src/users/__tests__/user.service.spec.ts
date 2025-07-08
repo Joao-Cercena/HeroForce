@@ -93,18 +93,19 @@ describe('UsersService', () => {
   });
 
   describe('findAllHeroes', () => {
-    it('deve retornar todos os heróis com apenas id e name', async () => {
+    it('deve retornar todos os heróis com apenas id, name e heroName', async () => {
       const mockUsers = [
-        { id: '1', name: 'Hero 1' },
-        { id: '2', name: 'Hero 2' },
+        { id: '1', name: 'Hero 1', heroName: 'Spider-Man' },
+        { id: '2', name: 'Hero 2', heroName: 'Iron Man' },
       ];
 
       jest.spyOn(repository, 'find').mockResolvedValue(mockUsers as User[]);
 
       const result = await service.findAllHeroes();
 
-      expect(repository.find).toHaveBeenCalledWith({ select: ['id', 'name'] });
+      expect(repository.find).toHaveBeenCalledWith({ select: ['id', 'name', 'heroName'] });
       expect(result).toEqual(mockUsers);
+      expect(result[0]).toHaveProperty('heroName');
       expect(result[0]).not.toHaveProperty('password');
       expect(result[0]).not.toHaveProperty('email');
     });
