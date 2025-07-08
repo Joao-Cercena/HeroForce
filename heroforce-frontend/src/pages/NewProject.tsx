@@ -5,7 +5,7 @@ import { useToast } from "../context/ToastContext";
 import { getHeroes } from "../services/userService";
 
 const NewProject = () => {
-  const [heroes, setHeroes] = useState<{ id: string; name: string }[]>([]);
+  const [heroes, setHeroes] = useState<{ id: string; name: string; heroName: string; }[]>([]);
   const { addToast } = useToast();
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const NewProject = () => {
       try {
         const data = await getHeroes();
         setHeroes(data);
+        console.log(data);
       } catch (error) {
         addToast("Erro ao carregar heróis", "error");
       }

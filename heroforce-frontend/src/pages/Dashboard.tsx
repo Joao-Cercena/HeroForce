@@ -95,7 +95,7 @@ const Dashboard = () => {
               <option value="">Todos</option>
               {heroes.map((hero) => (
                 <option key={hero.id} value={hero.id}>
-                  {hero.name}
+                   {`${hero.name} (${hero.heroName})`}
                 </option>
               ))}
             </select>

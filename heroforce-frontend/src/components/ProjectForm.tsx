@@ -6,6 +6,7 @@ import { saveProject } from "../services/projectService";
 type Hero = {
   id: string;
   name: string;
+  heroName: string;
 };
 
 type ProjectFormProps = {
@@ -154,7 +155,7 @@ const ProjectForm = ({
             >
               {heroes.map((hero) => (
                 <option key={hero.id} value={hero.id}>
-                  {hero.name}
+                  {`${hero.name} (${hero.heroName})`}
                 </option>
               ))}
             </select>

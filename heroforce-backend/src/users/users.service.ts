@@ -26,6 +26,6 @@ export class UsersService {
   }
 
   async findAllHeroes(): Promise<User[]> {
-    return this.usersRepository.find({ select: ['id', 'name'] });
+    return this.usersRepository.find({ select: ['id', 'name', 'heroName'] });
   }
 }

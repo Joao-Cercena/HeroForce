@@ -17,12 +17,11 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-.name{
+.name {
   margin: 0;
 }
 
-.responsavel{
+.responsavel {
   margin: 0;
 }
 
@@ -51,6 +50,29 @@
   border-left: 4px solid #4caf50;
 }
 
+.status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.pendenteStatus {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.emandamentoStatus {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.concluidoStatus {
+  background-color: #d4edda;
+  color: #155724;
+}
+
 .editButton {
   margin-top: 10px;
   padding: 6px 10px;
@@ -60,6 +82,7 @@
   border-radius: 4px;
   cursor: pointer;
   display: block;
+  font-weight: bold;
   width: 100%;
 }
 

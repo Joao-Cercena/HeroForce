@@ -66,8 +66,31 @@ const ProjectCard = ({ project }: { project: any }) => {
           ></div>
         </div>
 
-        <h5 className={styles.responsavel}>Responsável: {project.hero?.name}</h5>
-        <span>Status: {statusLabelMap[status] || "Desconhecido"}</span>
+        <h5 className={styles.responsavel}>
+          Responsável:{" "}
+          {project.hero?.name && project.hero?.heroName
+            ? `${project.hero.name} (${project.hero.heroName})`
+            : project.hero?.name || "Não atribuído"}
+        </h5>
+
+        <span>
+          Status:
+          <span
+            className={`${styles.status} ${
+              project.status === "emandamento"
+                ? styles.emandamentoStatus
+                : project.status === "concluido"
+                ? styles.concluidoStatus
+                : styles.pendenteStatus
+            }`}
+          >
+            {project.status === "emandamento"
+              ? "Em Andamento"
+              : project.status === "concluido"
+              ? "Concluído"
+              : "Pendente"}
+          </span>
+        </span>
 
         {isAdmin && (
           <div className={styles.buttons}>

@@ -53,7 +53,9 @@ const ProjectDetails = () => {
       <h1>{project.name}</h1>
       <pre className={styles.description}>{project.description}</pre>
 
-      <p className={styles.description}>Responsável: {project.hero.name}</p>
+      <p className={styles.description}>
+        Responsável: {`${project.hero.name} (${project.hero.heroName})`}
+      </p>
 
       <div className={styles.statusContainer}>
         <span>Status: </span>
