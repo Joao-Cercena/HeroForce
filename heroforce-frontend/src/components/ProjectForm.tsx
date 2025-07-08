@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "./ProjectForm.module.css";
+import styles from "../styles/components/ProjectForm.module.css";
 import { saveProject } from "../services/projectService";
 
 type Hero = {

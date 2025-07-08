@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
-import styles from "./ProjectDetails.module.css";
+import styles from "../styles/pages/ProjectDetails.module.css";
 import { getProjectById } from "../services/projectService";
 import Loading from "../components/Loading";
 
@@ -51,7 +51,7 @@ const ProjectDetails = () => {
       </button>
 
       <h1>{project.name}</h1>
-      <p className={styles.description}>{project.description}</p>
+      <pre className={styles.description}>{project.description}</pre>
 
       <p className={styles.description}>Responsável: {project.hero.name}</p>
 

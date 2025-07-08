@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getProjects } from "../services/projectService";
 import { getHeroes } from "../services/userService";
 import ProjectCard from "../components/ProjectCard";
-import styles from "./Dashboard.module.css";
+import styles from "../styles/pages/Dashboard.module.css";
 import Loading from "../components/Loading";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";

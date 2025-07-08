@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
 import { useToast } from "../context/ToastContext";
-import styles from "./Register.module.css";
+import styles from "../styles/pages/Register.module.css";
 import heroList from "../utils/heroes.json";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [heroCharacter, setHeroCharacter] = useState({
     name: heroList[0].name,
     profileImage: heroList[0].profileImage,
@@ -25,6 +26,14 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setPasswordError("");
+
+    if (password.length < 6) {
+      setPasswordError("A senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -83,9 +92,23 @@ const Register = () => {
             id="password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (passwordError && e.target.value.length >= 6) {
+                setPasswordError(""); // limpa o erro se o usuário corrigir
+              }
+            }}
+            onBlur={() => {
+              if (password.length < 6) {
+                setPasswordError("A senha deve ter no mínimo 6 caracteres.");
+              }
+            }}
             required
           />
+
+          {passwordError && (
+            <small style={{ color: "red" }}>{passwordError}</small>
+          )}
         </div>
 
         <div className={styles.formGroup}>

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ConfirmDialog.module.css";
+import styles from "../styles/components/ConfirmDialog.module.css";
 
 interface ConfirmDialogProps {
   message: string;

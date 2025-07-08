@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./ProjectCard.module.css";
+import styles from "../styles/components/ProjectCard.module.css";
 import ConfirmDialog from "./ConfirmDialog";
 import { deleteProject } from "../services/projectService";
 import { useToast } from "../context/ToastContext";
@@ -20,7 +20,8 @@ const ProjectCard = ({ project }: { project: any }) => {
     concluido: styles.concluido,
   };
 
-  const statusClass = statusClassMap[status as keyof typeof statusClassMap] || "";
+  const statusClass =
+    statusClassMap[status as keyof typeof statusClassMap] || "";
 
   const handleDelete = async () => {
     try {
@@ -33,11 +34,10 @@ const ProjectCard = ({ project }: { project: any }) => {
   };
 
   const statusLabelMap: Record<string, string> = {
-  pendente: "Pendente",
-  emandamento: "Em Andamento",
-  concluido: "Concluído",
-};
-
+    pendente: "Pendente",
+    emandamento: "Em Andamento",
+    concluido: "Concluído",
+  };
 
   return (
     <>
@@ -52,19 +52,25 @@ const ProjectCard = ({ project }: { project: any }) => {
         />
       )}
 
-      <div className={`${styles.projectCard} ${statusClass}`} onClick={() => navigate(`/projects/${project.id}`)}>
-        <h3>{project.name}</h3>
-        <p>{project.description}</p>
+      <div
+        className={`${styles.projectCard} ${statusClass}`}
+        onClick={() => navigate(`/projects/${project.id}`)}
+      >
+        <h3 className={styles.name}>{project.name}</h3>
+        <pre className={styles.description}>{project.description}</pre>
 
         <div className={styles.progressBar}>
-          <div className={styles.progressFill} style={{ width: `${project.progress || 0}%` }}></div>
+          <div
+            className={styles.progressFill}
+            style={{ width: `${project.progress || 0}%` }}
+          ></div>
         </div>
 
-        <h5>Responsável: {project.hero?.name}</h5>
+        <h5 className={styles.responsavel}>Responsável: {project.hero?.name}</h5>
         <span>Status: {statusLabelMap[status] || "Desconhecido"}</span>
 
         {isAdmin && (
-          <>
+          <div className={styles.buttons}>
             <button
               className={styles.editButton}
               onClick={(e) => {
@@ -83,7 +89,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             >
               Deletar
             </button>
-          </>
+          </div>
         )}
       </div>
     </>
